@@ -18,8 +18,8 @@ class Event
     int eventDate, allDay;
     String eventName, location, timezone, recurrence, eventDescription;
     boolean boolAllDay = false;
-
     long id, calendar_id, duration, startTime, endTime;
+    Date startDate, endDate;
 
     public Event(long eID, long currCalID, String eTitle, String eDescr, String eLocation,
                  long eDTStart, long eDTEnd, int eDuration, int eAllDay, String eTimezone, String eRRule)
@@ -39,6 +39,29 @@ class Event
         }
         timezone = eTimezone;
         recurrence = eRRule;
+        createDates(startTime, endTime);
+    }
+
+    public void createDates(long start, long end)
+    {
+        int YEAR, MONTH, DAY, MINUTES, SECONDS;
+        Calendar calendar = Calendar.getInstance();
+        //Start Date
+        calendar.setTimeInMillis(start);
+        YEAR = calendar.get(Calendar.YEAR);
+        MONTH = calendar.get(Calendar.MONTH);
+        DAY = calendar.get(Calendar.DAY_OF_MONTH);
+        MINUTES = calendar.get(Calendar.MINUTE);
+        SECONDS = calendar.get(Calendar.SECOND);
+        startDate = new Date(YEAR, MONTH, DAY, MINUTES, SECONDS);
+        //End Date
+        calendar.setTimeInMillis(end);
+        YEAR = calendar.get(Calendar.YEAR);
+        MONTH = calendar.get(Calendar.MONTH);
+        DAY = calendar.get(Calendar.DAY_OF_MONTH);
+        MINUTES = calendar.get(Calendar.MINUTE);
+        SECONDS = calendar.get(Calendar.SECOND);
+        endDate = new Date(YEAR, MONTH, DAY, MINUTES, SECONDS);
     }
 
     /*********
@@ -172,6 +195,17 @@ class Event
     public boolean getAllDay()
     {
         return boolAllDay;
+    }
+    /********************
+     RETURN DATE OBJECTS
+     ********************/
+    public Date getStartDate()
+    {
+        return startDate;
+    }
+    public Date getEndDate()
+    {
+        return endDate;
     }
 }
 
