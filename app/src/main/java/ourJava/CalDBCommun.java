@@ -1,11 +1,14 @@
 package ourJava;
-
+/**
+ * Created by taber on 11/9/14.
+ */
 import java.util.*;
 import java.util.Iterator;
 import java.util.Calendar;
 import android.net.Uri;
 import android.content.ContentValues;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.provider.CalendarContract;
 import android.content.ContentUris;
 import android.database.Cursor;
@@ -92,6 +95,7 @@ public class CalDBCommun implements Runnable
     public CalDBCommun()
     {
         //Initialize variables
+        Context context;
         eventList = new ArrayList<Event>(); //initiate list of events
         calendarList = new ArrayList<myCalendar>();
         currEventID = 0;
@@ -231,7 +235,8 @@ public class CalDBCommun implements Runnable
     {
         //Necessary or optional attributes for storing
         Event currEvent;
-        
+
+        Context context;
         ContentResolver cr;
         ContentValues values;
         
@@ -242,7 +247,7 @@ public class CalDBCommun implements Runnable
         {
             currEvent = myEvent;
             
-            cr = ContentResolver.getContentResolver();
+            cr = context.getContentResolver();
             values = new ContentValues();
             
             //Only set to true if required attributes are included
@@ -297,6 +302,7 @@ public class CalDBCommun implements Runnable
     
     private class EventRemover implements Runnable
     {
+        Context context;
         Event currEvent;
         ContentResolver cr;
         ContentValues values;
@@ -305,7 +311,7 @@ public class CalDBCommun implements Runnable
         public EventRemover(Event myEvent)
         {
             currEvent = myEvent;
-            cr = ContentResolver.getContentResolver();
+            cr = context.getContentResolver();
             values = new ContentValues();
             deleteUri = null;
         }
@@ -314,7 +320,7 @@ public class CalDBCommun implements Runnable
         public void run()
         {
             deleteUri = ContentUris.withAppendedId(CalendarContract.Events.CONTENT_URI, currEvent.getID());
-            int rows = ContentResolver.getContentResolver().delete(deleteUri, null, null);
+            int rows = context.getContentResolver().delete(deleteUri, null, null);
             if(rows < 1)
             {
                 removeSuccess = false;
@@ -332,14 +338,16 @@ public class CalDBCommun implements Runnable
         Event currEvent;
         
         //Create content resolver and content values and uri path to table
+        Context context;
         ContentResolver cr;
         ContentValues values;
         Uri updateUri;
         
         public EventUpdater(Event myEvent)
         {
+
             currEvent = myEvent;
-            cr = ContentResolver.getContentResolver();
+            cr = context.getContentResolver();
             values = new ContentValues();
             updateUri = null;
         }
@@ -361,7 +369,7 @@ public class CalDBCommun implements Runnable
             values.put(CalendarContract.Events.RRULE, currEvent.getRecurrence());
             
             updateUri = ContentUris.withAppendedId(CalendarContract.Events.CONTENT_URI, currEvent.getID());
-            int rows = ContentResolver.getContentResolver().update(updateUri, values, null, null);
+            int rows = context.getContentResolver().update(updateUri, values, null, null);
             if(rows < 1)
             {
                 //No rows were updated, so return false, nothing was updated
@@ -377,6 +385,7 @@ public class CalDBCommun implements Runnable
     private class ListInit implements Runnable
     {
         //Variables used to define and traverse calendars
+        Context context;
         long currCalID;
         String displayName;
         String ownerName;
@@ -399,7 +408,7 @@ public class CalDBCommun implements Runnable
         Cursor cur;
         
         //Create content resolver to hold result set
-        ContentResolver cr = getContentResolver();
+        ContentResolver cr = context.getContentResolver();
         
         public ListInit()
         {

@@ -1,7 +1,7 @@
 package ourJava;
 
 /**
- * Created by jfranze0226 on 11/10/14.
+ * Created by taber on 11/9/14.
  */
 class myCalendar {
     private long cal_id; //unique id of calendar

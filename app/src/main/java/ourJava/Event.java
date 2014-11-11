@@ -7,8 +7,6 @@ import java.util.Calendar;
  */
 class Event
 {
-    String eventName, location, timezone, recurrence;
-    String eventDescription = "NONE";
     /*
        eventReminder is an integer value representing the minutes
        prior to the startTime of the Event.
@@ -17,61 +15,11 @@ class Event
        eventReminder = -1 indicate no reminder is set.
     */
     int eventReminder = -1;
-    /*
-       eventRecurrence can be one of 4 integer values.
-       If daily, eventRecurrence = 0
-       If weekly, eventRecurrence = 1
-       If monthly, eventRecurrence = 2
-       If yearly, eventRecurrence = 3
-       eventRecurrence = -1 indicate no recurrence is set.
-    */
-    //int eventRecurrence = -1;
-    int eventDate;
-    int allDay;
+    int eventDate, allDay;
+    String eventName, location, timezone, recurrence, eventDescription;
+    boolean boolAllDay = false;
 
     long id, calendar_id, duration, startTime, endTime;
-   /*
-   void Event(String name, int date, String description, int reminder, int recurrence)
-   {
-      eventName = name;
-      if(description != "NONE")
-      {
-         eventDescription = description;
-      }
-      if(reminder != -1)
-      {
-         eventReminder = reminder;
-      }
-      if(recurrence != -1)
-      {
-         eventRecurrence = recurrence;
-      }
-      startTime = -1;
-      endTime = -1;
-      eventDate = date;
-      allDay = true;
-   }
-   void Event(String name, int start, int end, int date, String description, int reminder, int recurrence)
-   {
-      eventName = name;
-      if(description != "NONE")
-      {
-         eventDescription = description;
-      }
-      if(reminder != -1)
-      {
-         eventReminder = reminder;
-      }
-      if(recurrence != -1)
-      {
-         eventRecurrence = recurrence;
-      }
-      startTime = start;
-      endTime = end;
-      eventDate = date;
-      allDay = false;
-   }
-   */
 
     public Event(long eID, long currCalID, String eTitle, String eDescr, String eLocation,
                  long eDTStart, long eDTEnd, int eDuration, int eAllDay, String eTimezone, String eRRule)
@@ -85,64 +33,69 @@ class Event
         endTime = eDTEnd;
         duration = eDuration;
         allDay = eAllDay; //set to boolean based on 1 or 0
+        if(allDay == 1)
+        {
+            boolAllDay = true;
+        }
         timezone = eTimezone;
         recurrence = eRRule;
     }
 
+    /*********
+     EVENT ID
+     *********/
     public long getID()
     {
         return id;
     }
-
     public void setID(long eID)
     {
         id = eID;
     }
-
+    /*******
+     CAL ID
+     *******/
     public long getCalID()
     {
         return calendar_id;
     }
-
     public void setCalID(long cID)
     {
         calendar_id = cID;
     }
-
+    /*********
+     LOCATION
+     *********/
     public String getLocation()
     {
         return location;
     }
-
     public void setLoction(String eLocation)
     {
         location = eLocation;
     }
-
+    /*********
+     DURATION
+     *********/
     public long getDuration()
     {
         return duration;
     }
-
     public void setDuration(long eDuration)
     {
         duration = eDuration;
     }
-
+    /*********
+     TIMEZONE
+     *********/
     public String getTimezone()
     {
         return timezone;
     }
-
     public void setTimezone(String eTimezone)
     {
         timezone = eTimezone;
     }
-    public int getAllDay()
-    {
-        return allDay;
-    }
-
     /**************
      EVENT NAME
      **************/
@@ -195,14 +148,9 @@ class Event
     {
         return eventReminder;
     }
-    /**************
+    /***********
      RECURRENCE
-     *************
-     void setRecurrence(int recurrence)
-     {
-     eventRecurrence = recurrence;
-     }
-     */
+    ************/
     String getRecurrence()
     {
         return recurrence;
@@ -217,6 +165,13 @@ class Event
     int getDate()
     {
         return eventDate;
+    }
+    /*********
+     ALLDAY??
+     *********/
+    public boolean getAllDay()
+    {
+        return boolAllDay;
     }
 }
 
