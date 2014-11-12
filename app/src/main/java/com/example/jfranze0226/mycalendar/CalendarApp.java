@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import ourJava.CalDBCommun;
+
 
 public class CalendarApp extends Activity {
 
@@ -12,6 +14,7 @@ public class CalendarApp extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar_app);
+        CalDBCommun instance = new CalDBCommun();
     }
 
 
