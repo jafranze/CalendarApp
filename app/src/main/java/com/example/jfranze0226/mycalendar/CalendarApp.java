@@ -17,8 +17,8 @@ public class CalendarApp extends Activity {
         //
         //DIES WITH CREATION OF INITIALIZE THREAD....
         //
-        //Thread initialize = new Thread(new CalDBCommun());
-        //initialize.start();
+        Thread initialize = new Thread(new CalDBCommun());
+        initialize.start();
     }
 
     @Override
