@@ -95,7 +95,7 @@ public class CalDBCommun implements Runnable
     public CalDBCommun()
     {
         //Initialize variables
-        Context context;
+       //Context context;
         eventList = new ArrayList<Event>(); //initiate list of events
         calendarList = new ArrayList<myCalendar>();
         currEventID = 0;

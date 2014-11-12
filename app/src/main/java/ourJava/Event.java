@@ -8,19 +8,33 @@ import java.util.Calendar;
 class Event
 {
     /*
-       eventReminder is an integer value representing the minutes
-       prior to the startTime of the Event.
-       ex. eventReminder = 15 would indicate a reminder set for
-       15 minutes prior to the startTime.
-       eventReminder = -1 indicate no reminder is set.
+      eventReminder is an integer value representing the minutes
+      prior to the startTime of the Event.
+      ex. eventReminder = 15 would indicate a reminder set for
+      15 minutes prior to the startTime.
+      eventReminder = -1 indicate no reminder is set.
     */
     int eventReminder = -1;
     int eventDate, allDay;
     String eventName, location, timezone, recurrence, eventDescription;
-    boolean boolAllDay = false;
+    boolean boolAllDay;
     long id, calendar_id, duration, startTime, endTime;
     Date startDate, endDate;
-
+    public Event()
+    {
+        id = 0;
+        calendar_id = 0;
+        eventName = null;
+        eventDescription = null;
+        location = null;
+        startTime = 0;
+        endTime = 0;
+        duration = 0;
+        allDay = 0; //set to boolean based on 1 or 0
+        boolAllDay = false;
+        timezone = null;
+        recurrence = null;
+    }
     public Event(long eID, long currCalID, String eTitle, String eDescr, String eLocation,
                  long eDTStart, long eDTEnd, int eDuration, int eAllDay, String eTimezone, String eRRule)
     {

@@ -14,7 +14,18 @@ public class CalendarApp extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar_app);
-        CalDBCommun instance = new CalDBCommun();
+        //
+        //DIES WITH CREATION OF INITIALIZE THREAD....
+        //
+        //Thread initialize = new Thread(new CalDBCommun());
+        //initialize.start();
+    }
+
+    @Override
+    public void onStart()
+    {
+        super.onStart();
+
     }
 
 
