@@ -7,7 +7,7 @@ import java.util.Calendar;
 /**
  * Created by jfranze0226 on 11/10/14.
  */
-class Event
+public class Event
 {
     int allDay;
     String eventName, location, timezone, recurrence, eventDescription, recordingFileName;
@@ -43,7 +43,7 @@ class Event
         eventDescription = eDescr;
         location = eLocation;
         startTime = eDTStart;
-        recordingFileName = "recording" + Long.toString(id);
+        recordingFileName = "/recording" + Long.toString(id);
 
         allDay = eAllDay; //set to boolean based on 1 or 0
         if(allDay == 1)
@@ -76,7 +76,7 @@ class Event
         eventDescription = eDescr;
         location = eLocation;
         startTime = myStartDate.getDateInMillis();
-        recordingFileName = "recording" + Long.toString(id);
+        recordingFileName = "/recording" + Long.toString(id);
 
         allDay = eAllDay; //set to boolean based on 1 or 0
         if(allDay == 1)
@@ -109,7 +109,7 @@ class Event
         location = eLocation;
         startTime = eDTStart;
         reminder = eReminder;
-        recordingFileName = "recording" + Long.toString(id);
+        recordingFileName = "/recording" + Long.toString(id);
 
         allDay = eAllDay; //set to boolean based on 1 or 0
         if(allDay == 1)
@@ -143,7 +143,7 @@ class Event
         location = eLocation;
         startTime = myStartDate.getDateInMillis();
         reminder = eReminder;
-        recordingFileName = "recording" + Long.toString(id);
+        recordingFileName = "/recording" + Long.toString(id);
 
         allDay = eAllDay; //set to boolean based on 1 or 0
         if(allDay == 1)
@@ -179,11 +179,13 @@ class Event
         MINUTES = calendar.get(Calendar.MINUTE);
         SECONDS = calendar.get(Calendar.SECOND);
         startDate = new Date(YEAR, MONTH, DAY, HOUR, MINUTES, SECONDS);
+        startTime = startInMillis;
     }
 
     public void setStartDate(Date myDate)
     {
         startDate = myDate;
+        startTime = myDate.getDateInMillis();
     }
 
     public void setEndDate(long endInMillis)
@@ -199,11 +201,15 @@ class Event
         MINUTES = calendar.get(Calendar.MINUTE);
         SECONDS = calendar.get(Calendar.SECOND);
         endDate = new Date(YEAR, MONTH, DAY, HOUR, MINUTES, SECONDS);
+        endTime = endInMillis;
+
     }
 
     public void setEndDate(Date myDate)
     {
         endDate = myDate;
+        endTime = myDate.getDateInMillis();
+
     }
 
     /*********

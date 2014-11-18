@@ -6,12 +6,19 @@ import com.example.jaredfranze.hellow.EventIcon;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import com.example.jaredfranze.hellow.Event;
+
 public class EventItem implements Item {
 
+    public static final int ITEM_TYPE_EVENT = 0;
+    public static final int ITEM_TYPE_WEATHER = 1;
+    public static final int ITEM_TYPE_HISTORY = 2;
+
+    private Event event;
     private String title;
     private Calendar startDate;
     private EventIcon icon;
-    private boolean isWeatherItem;
+    private int itemType;
     private boolean hasReminders;
 
     @Override
@@ -19,11 +26,13 @@ public class EventItem implements Item {
         return false;
     }
 
-    public EventItem(String title, Calendar startDate, EventIcon icon, boolean isWeatherItem, boolean hasReminders) {
+    public EventItem(Event event, String title, Calendar startDate, EventIcon icon, int isWeatherItem, boolean hasReminders) {
+
+        this.event = event;
         this.title = title;
         this.startDate = startDate;
         this.icon = icon;
-        this.isWeatherItem = isWeatherItem;
+        this.itemType = isWeatherItem;
         this.hasReminders = hasReminders;
     }
 
@@ -32,7 +41,7 @@ public class EventItem implements Item {
     }
 
     public String getStartTime() {
-        if (isWeatherItem) return null;
+        if (itemType != ITEM_TYPE_EVENT) return null;
 
         int ampm = startDate.get(Calendar.AM_PM);
 
@@ -55,9 +64,16 @@ public class EventItem implements Item {
         return icon;
     }
 
-    public boolean isWeatherItem() {
-        return isWeatherItem;
+    public int itemType() {
+        return itemType;
     }
 
     public boolean hasReminders() { return hasReminders; }
+
+    public Event getEvent() { return event; }
+
+    @Override
+    public String toString() {
+        return title;
+    }
 }

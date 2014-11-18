@@ -1,13 +1,16 @@
 package com.example.jaredfranze.hellow;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.format.DateUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -27,6 +30,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class Agenda extends Activity {
@@ -54,6 +59,7 @@ public class Agenda extends Activity {
 
     ListView agendaListView;
     ArrayList<Item> agendaItems;
+    AgendaArrayAdapter adapter;
 
     //
     // Methods
@@ -98,8 +104,8 @@ public class Agenda extends Activity {
         // Initialize Events
 
         events = new HashMap<String, ArrayList<Event>>();
-        loadEvents();
-        System.out.println(events.toString());
+       // loadEvents();
+        //System.out.println(events.toString());
 
         // Set Week View to Today
 
@@ -108,20 +114,55 @@ public class Agenda extends Activity {
         // Initialize Agenda
 
         agendaListView = (ListView)findViewById(R.id.agendaListView);
-        loadAgenda();
+        agendaListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                System.out.println(adapterView.getAdapter().getItem(i).toString());
+                EventItem eitem = (EventItem)adapterView.getAdapter().getItem(i);
+
+                if (eitem.itemType() == EventItem.ITEM_TYPE_EVENT) {
+                    Event event = eitem.getEvent();
+
+                    Intent intent = new Intent(getApplicationContext(), AddEvent.class);
+                    intent.putExtra("event_id", event.getID());
+                    startActivity(intent);
+                } else if(eitem.itemType() == EventItem.ITEM_TYPE_HISTORY) {
+
+                    ThisDayInHistory history = new ThisDayInHistory();
+                    String historyTitle = history.getTitle();
+                    String historyDescription = history.getDescription();
+
+                    // 1. Instantiate an AlertDialog.Builder with its constructor
+                    AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+
+                    // 2. Chain together various setter methods to set the dialog characteristics
+                    builder.setMessage(historyDescription)
+                            .setTitle(historyTitle);
+
+                    // 3. Get the AlertDialog from create()
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                }
+
+            }
+        });
 
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-
+        events.clear();
+        loadEvents();
         loadAgenda();
+        setWeekViewToThisWeek();
     }
 
     // Agenda
 
     private void loadAgenda() {
+
+        System.out.println("I EXIST la");
 
         ArrayList<String> dateKeys = new ArrayList<String>();
 
@@ -139,15 +180,15 @@ public class Agenda extends Activity {
         String tomorrowKey = getDayKey(tomorrowc);
         if (!events.containsKey(tomorrowKey)) dateKeys.add(tomorrowKey);
 
-        //ThisDayInHistory history = new ThisDayInHistory();
-        //String historyTitle = history.getTitle();
-        //String historyDescription = history.getDescription();
-
         // sort up the keys and get to loading the events
 
         Collections.sort(dateKeys, new dateKeyComparator());
 
         ArrayList<Item> items = new ArrayList<Item>();
+
+        // this day
+
+        boolean hist = false;
 
         for (int i = 0; i < dateKeys.size(); i++) {
             //System.out.println("KEY: " + dateKeys.get(i));
@@ -158,6 +199,13 @@ public class Agenda extends Activity {
                 date.setTime(formatter.parse(dateKeys.get(i)));
                 DayHeaderItem dayHeaderItem = new DayHeaderItem(date);
                 items.add(dayHeaderItem);
+
+                if (!hist) {
+                    EventItem eventItem = new EventItem(null, "This Day in History", null, null, EventItem.ITEM_TYPE_HISTORY, false);
+                    items.add(eventItem);
+
+                    hist = true;
+                }
             } catch (ParseException e) {
                 e.printStackTrace();
             }
@@ -172,14 +220,22 @@ public class Agenda extends Activity {
                     Event event = dayEvents.get(e);
                     Calendar eventc = Calendar.getInstance();
                     eventc.set(event.getStartDate().getYear(), (event.getStartDate().getMonth() - 1), (event.getStartDate().getDay() - 1), event.getStartDate().getHours(), event.getStartDate().getMinutes(), event.getStartDate().getSeconds());
-                    EventItem eventItem = new EventItem(event.eventName, eventc, null, false, (event.getReminder() != 0));
+                    EventItem eventItem = new EventItem(event, event.eventName, eventc, null, EventItem.ITEM_TYPE_EVENT, (event.getReminder() != 0));
                     items.add(eventItem);
                 }
             }
         }
 
-        AgendaArrayAdapter adapter = new AgendaArrayAdapter(this, items);
-        agendaListView.setAdapter(adapter);
+        if (adapter == null) {
+            adapter = new AgendaArrayAdapter(this, items);
+            agendaListView.setAdapter(adapter);
+        } else {
+            adapter.clear();
+            adapter.addAll(items);
+            adapter.notifyDataSetChanged();
+            agendaListView.invalidateViews();
+            agendaListView.refreshDrawableState();
+        }
     }
 
     // Week View
@@ -208,13 +264,22 @@ public class Agenda extends Activity {
             String dayOfTheWeek = Integer.valueOf(datec.get(Calendar.DAY_OF_MONTH)).toString();
             dayTextView.setText(dayOfTheWeek);
 
+            Calendar todayc = Calendar.getInstance();
+            todayc.set(Calendar.HOUR, 0);
+            todayc.set(Calendar.MINUTE, 0);
+            todayc.set(Calendar.SECOND, 0);
+
+            if (datec.before(todayc)) {
+                dayTextView.setAlpha(0.25f);
+            }
+
             // Get the day's day key & check for events
 
             TextView busyTextView = weekViewBusyTextView.get(day - 1);
             //busyTextView.setVisibility(events.containsKey(getDayKey(datec)) ? View.VISIBLE : View.INVISIBLE);
             busyTextView.setAlpha(events.containsKey(getDayKey(datec)) ? 1.0f : 0.25f);
 
-            Calendar todayc = Calendar.getInstance();
+            todayc = Calendar.getInstance();
             if (datec.get(Calendar.YEAR) == todayc.get(Calendar.YEAR)
                     && datec.get(Calendar.DAY_OF_YEAR) == todayc.get(Calendar.DAY_OF_YEAR)) {
                 // It's today
@@ -237,10 +302,20 @@ public class Agenda extends Activity {
             Event event = eventIterator.next();
 
             // Get event's day key
+            Calendar todayc = Calendar.getInstance();
+            todayc.set(Calendar.HOUR, 0);
+            todayc.set(Calendar.MINUTE, 0);
+            todayc.set(Calendar.SECOND, 0);
 
             Calendar eventc = Calendar.getInstance();
             eventc.set(event.getStartDate().getYear(), (event.getStartDate().getMonth() - 1), (event.getStartDate().getDay() - 1), event.getStartDate().getHours(), event.getStartDate().getMinutes(), event.getStartDate().getSeconds());
             String key = getDayKey(eventc);
+
+            // event check, kill past events
+
+            if (eventc.before(todayc)) {
+                continue;
+            }
 
             // If it's in the map, add it to the array, if not, start anew
 

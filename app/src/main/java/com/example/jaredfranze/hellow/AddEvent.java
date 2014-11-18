@@ -7,6 +7,7 @@ import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.text.Editable;
 import android.view.Menu;
@@ -17,12 +18,16 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
+import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 
 
 public class AddEvent extends Activity {
@@ -44,6 +49,7 @@ public class AddEvent extends Activity {
     TextView titletv;
 
     ImageButton reminderib;
+    ImageButton voiceib;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,10 +65,23 @@ public class AddEvent extends Activity {
         titletv = (TextView)findViewById(R.id.add_event_title);
 
         reminderib = (ImageButton)findViewById(R.id.add_event_reminder);
+        voiceib = (ImageButton)findViewById(R.id.add_event_voice);
+
+        voiceib.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                didLongClickEventVoice(view);
+                return false;
+            }
+        });
 
         Bundle extras = getIntent().getExtras();
-        if (extras != null && extras.containsKey("event")) {
-            event = (Event)extras.get("event");
+        if (extras != null && extras.containsKey("event_id")) {
+            CalDBCommun myDB = new CalDBCommun(this);
+            //myDB.retrieveEventList();
+
+            long eventID = (long)extras.getLong("event_id");
+            event = myDB.retrieveEvent(myDB.findIndexOfEventWithID(eventID));
         }
 
         if (event != null) {
@@ -74,7 +93,7 @@ public class AddEvent extends Activity {
 
             titletv.setText(event.getName());
 
-            reminderib.setAlpha(event.reminder != 0 ? 1.0f : 0.2f);
+            reminderib.setAlpha(event.reminder != 0 ? 1.0f : 0.3f);
 
             refreshAllDates();
         } else {
@@ -84,17 +103,28 @@ public class AddEvent extends Activity {
 
             Calendar today = Calendar.getInstance();
 
-            startDate = new Date(today.get(Calendar.YEAR), today.get(Calendar.MONTH) + 1, today.get(Calendar.DAY_OF_MONTH) + 1, today.get(Calendar.HOUR_OF_DAY), today.get(Calendar.MINUTE), today.get(Calendar.SECOND));
+            startDate = new Date(today.get(Calendar.YEAR), today.get(Calendar.MONTH), today.get(Calendar.DAY_OF_MONTH) + 1, today.get(Calendar.HOUR_OF_DAY), today.get(Calendar.MINUTE), today.get(Calendar.SECOND));
 
             today.add(Calendar.HOUR, 1);
-            endDate = new Date(today.get(Calendar.YEAR), today.get(Calendar.MONTH) + 1, today.get(Calendar.DAY_OF_MONTH) + 1, today.get(Calendar.HOUR_OF_DAY), today.get(Calendar.MINUTE), today.get(Calendar.SECOND));
+            endDate = new Date(today.get(Calendar.YEAR), today.get(Calendar.MONTH), today.get(Calendar.DAY_OF_MONTH) + 1, today.get(Calendar.HOUR_OF_DAY), today.get(Calendar.MINUTE), today.get(Calendar.SECOND));
 
-            reminderib.setVisibility(View.INVISIBLE);
+            voiceib.setVisibility(View.INVISIBLE);
+
+            reminderib.setAlpha(0.3f);
             remindertime = 0;
 
             refreshAllDates();
         }
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (new File(event.getRecordingFilePath()).exists()) {
+            voiceib.setImageDrawable(getResources().getDrawable(R.drawable.ic_play_arrow_black_24dp));
+        }
     }
 
     private void refreshAllDates() {
@@ -178,13 +208,17 @@ public class AddEvent extends Activity {
         {
             startDate.MONTH = m;
             startDate.YEAR = y;
-            startDate.DAY = d;
+            startDate.DAY = d + 1;
+            endDate.MONTH = m;
+            endDate.YEAR = y;
+            endDate.DAY = d + 1;
             refreshAllDates();
         }
     };
 
     public void didClickEventTime(View v) {
-        new TimePickerDialog(this, timeListener, startDate.getHours(), startDate.getMinutes(), false);
+        System.out.println("screw lingming");
+        new TimePickerDialog(this, timeListener, startDate.getHours(), startDate.getMinutes(), false).show();
     }
 
     private TimePickerDialog.OnTimeSetListener timeListener = new TimePickerDialog.OnTimeSetListener()
@@ -199,7 +233,8 @@ public class AddEvent extends Activity {
     };
 
     public void didClickEventEnd(View v) {
-        new TimePickerDialog(this, endTimeListener, endDate.getHours(), endDate.getMinutes(), false);
+        System.out.println("screw lingming");
+        new TimePickerDialog(this, endTimeListener, endDate.getHours(), endDate.getMinutes(), false).show();
     }
 
     private TimePickerDialog.OnTimeSetListener endTimeListener = new TimePickerDialog.OnTimeSetListener()
@@ -235,6 +270,7 @@ public class AddEvent extends Activity {
     }
 
     public void didClickEventReminder(View v) {
+        System.out.println("screw lingming");
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Set Reminder")
                 .setItems(R.array.reminders_array, new DialogInterface.OnClickListener() {
@@ -269,13 +305,35 @@ public class AddEvent extends Activity {
                         }
 
                         remindertime = m;
+
+                        reminderib.setAlpha(m != 0 ? 1.0f : 0.3f);
                     }
                 });
-        builder.create();
+        builder.create().show();
     }
 
     public void didClickEventVoice(View v) {
         if (!newEvent) {
+            if (new File(event.getRecordingFilePath()).exists()) {
+                MediaPlayer m = new MediaPlayer();
+                try {
+                    m.setDataSource(event.getRecordingFilePath());
+                    m.prepare();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                m.start();
+                Toast.makeText(getApplicationContext(), "Playing Voice Memo", Toast.LENGTH_SHORT).show();
+            } else {
+                Intent i = new Intent(getApplicationContext(), VoiceMemo.class);
+                i.putExtra("event", event.getID());
+                startActivity(i);
+            }
+        }
+    }
+
+    public void didLongClickEventVoice(View v) {
+        if (!newEvent && (new File(event.getRecordingFilePath()).exists())) {
             Intent i = new Intent(getApplicationContext(), VoiceMemo.class);
             i.putExtra("event", event.getID());
             startActivity(i);
@@ -293,12 +351,17 @@ public class AddEvent extends Activity {
         List<Event>eList = new ArrayList<Event>();
 
         calList = myDB.retrieveCalendarList();
+        eList = myDB.retrieveEventList();
+
+        TimeZone myTimeZone = TimeZone.getDefault();
+        String timez = myTimeZone.toString();
 
         event.setStartDate(startDate);
         event.setEndDate(endDate);
         event.setReminder(remindertime);
         event.changeName(titletv.getText().toString());
-        event.setCalID(myDB.findIndexOfEventWithID(calList.get(0).getID()));
+        event.setCalID(calList.get(0).getID());
+        event.setTimezone(timez);
 
         if (newEvent) {
             myDB.addEvent(event);

@@ -27,10 +27,10 @@ public class hellur extends Activity {
         eList = new ArrayList<Event>();
 
         Calendar beginTime = Calendar.getInstance();
-        beginTime.set(2014, Calendar.NOVEMBER, 13, 21, 05);
+        beginTime.set(2014, Calendar.NOVEMBER, 21, 21, 05);
         long start = beginTime.getTimeInMillis();
         Calendar endTime = Calendar.getInstance();
-        endTime.set(2014, Calendar.NOVEMBER, 13, 22, 30);
+        endTime.set(2014, Calendar.NOVEMBER, 21, 22, 30);
         long end = endTime.getTimeInMillis();
 
         TimeZone myTimeZone = TimeZone.getDefault();
@@ -39,18 +39,18 @@ public class hellur extends Activity {
         CalDBCommun myDB = new CalDBCommun(this);
 
         Event myEvent;
-/*
-        myEvent = new Event(62, 1, "Test Your Project","Test Description","Test Location",start,end,0,0,timez,null,1);
-        myDB.addEvent(myEvent);
-*/
+
+        //myEvent = new Event(62, 1, "EVENT FROM HELLUR","Test Description","Test Location",start,end,0,0,timez,null,1);
+        //myDB.addEvent(myEvent);
+
         calList = myDB.retrieveCalendarList();
         eList = myDB.retrieveEventList();
 
         myCalendar cal;
         long myReminder = 10;
         String myString = null;
-        //myEvent = new Event(0, 1, "Test Your Project","Test Description","Test Location",start,end,0,0,timez,null,myReminder);
-        //myDB.addEvent(myEvent);
+        myEvent = new Event(0, 1, "Test Your Project","Test Description","Test Location",start,end,0,0,timez,null,myReminder);
+        myDB.addEvent(myEvent);
 /*
         for(int i = 0; i < 100; i++)
         {
@@ -59,11 +59,11 @@ public class hellur extends Activity {
         }
 */
         boolean myBool;
-        myBool = myDB.updateEvent(myDB.findIndexOfEventWithID(479),new Event(64, 1, "Test Update Project","Test Update Description","Test Update Location",start,end,0,0,timez,null,15));
-        myString = myString + "Update Event was " + Boolean.toString(myBool) + "\n";
+        //myBool = myDB.updateEvent(myDB.findIndexOfEventWithID(479),new Event(64, 1, "Test Update Project","Test Update Description","Test Update Location",start,end,0,0,timez,null,15));
+        //myString = myString + "Update Event was " + Boolean.toString(myBool) + "\n";
 
-        myBool = myDB.hasConflict(myDB.retrieveEvent(5));
-        myString = myString + "Has Conflict (supposed to be true) returns " + Boolean.toString(myBool) + "\n";
+        //myBool = myDB.hasConflict(myDB.retrieveEvent(5));
+        //myString = myString + "Has Conflict (supposed to be true) returns " + Boolean.toString(myBool) + "\n";
 
 
         myString = myString + "Calendar list from Calendar Contract.\n";

@@ -48,8 +48,8 @@ public class AgendaArrayAdapter extends ArrayAdapter<Item> {
                 view.setLongClickable(false);
 
                 TextView titleView = (TextView) view.findViewById(R.id.agenda_item_day);
-                System.out.println(dayHeaderItem.getTitle());
-                System.out.println(titleView.toString());
+                //System.out.println(dayHeaderItem.getTitle());
+                //System.out.println(titleView.toString());
                 titleView.setText(dayHeaderItem.getTitle());
 
             }else{
@@ -59,12 +59,19 @@ public class AgendaArrayAdapter extends ArrayAdapter<Item> {
                 TextView titleView = (TextView)view.findViewById(R.id.agenda_item_event_title);
                 TextView timeView = (TextView)view.findViewById(R.id.agenda_item_event_time);
                 ImageView iconView = (ImageView)view.findViewById(R.id.agenda_item_event_icon);
-                ImageButton reminderButton = (ImageButton)view.findViewById(R.id.agenda_item_event_reminder);
+                ImageView reminderButton = (ImageView)view.findViewById(R.id.agenda_item_event_reminder);
 
                 titleView.setText(eventItem.getTitle());
-                timeView.setText(eventItem.getStartTime());
+
                 //iconView.setImageDrawable(eventItem.getIcon().getIconDrawable());
-                reminderButton.setVisibility((eventItem.hasReminders() ? View.VISIBLE : View.INVISIBLE));
+                if (eventItem.itemType() == EventItem.ITEM_TYPE_EVENT) {
+                    timeView.setText(eventItem.getStartTime());
+                    reminderButton.setVisibility((eventItem.hasReminders() ? View.VISIBLE : View.INVISIBLE));
+                } else if(eventItem.itemType() == EventItem.ITEM_TYPE_HISTORY) {
+                    timeView.setText("·");
+                    reminderButton.setVisibility(View.VISIBLE);
+                    reminderButton.setImageDrawable(getContext().getResources().getDrawable(R.drawable.ic_book_grey600_24dp));
+                }
             }
         }
         return view;

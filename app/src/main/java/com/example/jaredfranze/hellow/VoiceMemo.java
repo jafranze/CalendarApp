@@ -18,14 +18,14 @@ public class VoiceMemo extends Activity {
     private MediaRecorder myAudioRecorder;
     private String outputFile = null;
     private Button start,stop,play,save,erase;
-    int event;
+    long event;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            event = (int) extras.getInt("event");
+            event = extras.getLong("event");
         }
 
         setContentView(R.layout.activity_voicememo);
@@ -49,7 +49,7 @@ public class VoiceMemo extends Activity {
         save.setEnabled(false);
         //May need to do something with this
         outputFile = Environment.getExternalStorageDirectory().
-                getAbsolutePath() + "recording" + event;
+                getAbsolutePath() + "/recording" + event;
 
         myAudioRecorder = new MediaRecorder();
         myAudioRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
