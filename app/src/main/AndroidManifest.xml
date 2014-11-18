@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.jfranze0226.mycalendar" >
+    package="com.example.jaredfranze.hellow" >
+
     <uses-permission android:name="android.permission.READ_CALENDAR" />
     <uses-permission android:name="android.permission.WRITE_CALENDAR" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -10,13 +14,32 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.example.jfranze0226.mycalendar.CalendarApp"
+            android:name="com.example.jaredfranze.hellow.hellur"
             android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name=".VoiceMemo"
+            android:label="@string/app_name">
+        </activity>
+        <activity
+            android:name="com.example.jaredfranze.hellow.Agenda"
+            android:label="@string/title_activity_agenda"
+            android:theme="@android:style/Theme.Holo.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name="com.example.jaredfranze.hellow.MonthView"
+            android:label="Month View"
+            android:theme="@android:style/Theme.Holo.NoActionBar">
+        </activity>
+        <activity
+            android:name="com.example.jaredfranze.hellow.AddEvent"
+            android:label="@string/title_activity_agenda"
+            android:theme="@style/Theme.AddEvent">
         </activity>
     </application>
 

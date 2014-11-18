@@ -1,0 +1,178 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.jaredfranze.hellow.AddEvent"
+    android:background="@android:color/transparent">
+
+
+    <RelativeLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_margin="0dp"
+        android:paddingTop="10dp"
+        android:id="@+id/todayView"
+        android:background="@android:color/white">
+
+        <TextView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="31"
+            android:textSize="50sp"
+            android:typeface="sans"
+            android:fontFamily="sans-serif-thin"
+            android:textAlignment="gravity"
+            android:id="@+id/add_event_day"
+            android:gravity="right"
+            android:paddingTop="0dp"
+            android:textColor="#4C4C4C"
+
+            android:clickable="true"
+            android:onClick="didClickEventDate"/>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="70dp"
+            android:layout_alignParentTop="true"
+            android:paddingLeft="10dp"
+            android:paddingRight="20dp"
+            android:layout_toRightOf="@id/add_event_day"
+            android:id="@+id/add_event_dow_month"
+
+            android:clickable="true"
+            android:onClick="didClickEventDate">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Today"
+                android:textSize="18dp"
+                android:typeface="sans"
+                android:fontFamily="sans-serif-light"
+                android:textAlignment="gravity"
+                android:id="@+id/add_event_dow"
+                android:gravity="left"
+                android:paddingTop="13dp"
+                android:textColor="#7B7D7D"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="NOV"
+                android:textSize="14dp"
+                android:typeface="sans"
+                android:fontFamily="sans-serif-light"
+                android:textAlignment="gravity"
+                android:id="@+id/add_event_month"
+                android:gravity="left"
+                android:paddingTop="0dp"
+                android:textColor="#FC6666"/>
+        </LinearLayout>
+
+        <ImageButton
+            android:layout_width="55dp"
+            android:layout_height="70dp"
+            android:src="@drawable/ic_insert_invitation_black_24dp"
+            style="?android:attr/borderlessButtonStyle"
+            android:id="@+id/add_event_voice"
+            android:layout_toRightOf="@+id/add_event_dow_month"
+
+            android:clickable="true"
+            android:onClick="didClickEventVoice"/>
+
+        <ImageButton
+            android:layout_width="55dp"
+            android:layout_height="70dp"
+            android:src="@drawable/ic_insert_invitation_black_24dp"
+            style="?android:attr/borderlessButtonStyle"
+            android:id="@+id/add_event_cancel"
+            android:layout_toLeftOf="@+id/add_event_done"
+
+            android:clickable="true"
+            android:onClick="didClickEventCancel"/>
+
+        <ImageButton
+            android:layout_width="65dp"
+            android:layout_height="70dp"
+            android:src="@drawable/ic_add_black_24dp"
+            android:id="@+id/add_event_done"
+            android:paddingRight="20dp"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_alignParentRight="true"
+
+            android:clickable="true"
+            android:onClick="didClickEventDone"/>
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="horizontal" android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="20dp"
+            android:layout_below="@id/add_event_day"
+            android:weightSum="1">
+            <TextView
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:text="1a"
+                android:gravity="center"
+                android:textColor="#4F4F4F"
+                android:textSize="13dp"
+                android:fontFamily="sans-serif-light"
+                android:id="@+id/add_event_time_start"
+
+                android:clickable="true"
+                android:onClick="didClickEventTime"/>
+            <TextView
+                android:layout_width="45dp"
+                android:layout_height="match_parent"
+                android:text="2h"
+                android:gravity="center"
+                android:textColor="#4F4F4F"
+                android:textSize="13dp"
+                android:fontFamily="sans-serif-light"
+                android:id="@+id/add_event_end"
+                android:paddingRight="5dp"
+
+                android:clickable="true"
+                android:onClick="didClickEventEnd"/>
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:src="@drawable/ic_notifications_grey600_18dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="16dp"
+                android:id="@+id/add_event_icon"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="All-Nighter"
+                android:gravity="center_vertical|left"
+                android:textColor="#4F4F4F"
+                android:textSize="15dp"
+                android:fontFamily="sans-serif-light"
+                android:id="@+id/add_event_title"
+                android:paddingLeft="6dp"
+                android:layout_weight="1.0"
+
+                android:clickable="true"
+                android:onClick="didClickEventTitle"/>
+            <ImageButton
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:id="@+id/add_event_reminder"
+                android:src="@drawable/reminder_button_sel"
+                style="?android:attr/borderlessButtonStyle"
+
+                android:clickable="true"
+                android:onClick="didClickEventReminder"/>
+        </LinearLayout>
+
+    </RelativeLayout>
+</RelativeLayout>
