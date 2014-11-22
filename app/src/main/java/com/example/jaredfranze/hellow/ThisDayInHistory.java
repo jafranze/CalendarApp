@@ -59,7 +59,7 @@ public class ThisDayInHistory {
         //split[0] holds title
         //split2[0] holds link
         //split3[0] holds description
-        title = titleSplit[1] + ".";
+        title = titleSplit[1];
         link = split2[0];
         description = split3[0].substring(7) + ".";
     }

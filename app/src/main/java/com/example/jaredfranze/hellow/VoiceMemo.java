@@ -13,6 +13,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+/**
+ * Created by Jared.Franze on 11/17/2014.
+ */
+
 public class VoiceMemo extends Activity {
 
     private MediaRecorder myAudioRecorder;

@@ -1,7 +1,7 @@
 package com.example.jaredfranze.hellow;
 
 /**
- * Created by Jared.Franze on 11/13/2014.
+ * Created by Taber on 11/13/2014.
  */
 
 import android.content.ContentResolver;

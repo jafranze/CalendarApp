@@ -21,6 +21,9 @@ import android.widget.Toast;
 import android.widget.Button;
 import android.view.View.OnClickListener;
 
+/**
+ * Created by Andrei on 11/17/14.
+ */
 
 public class MonthView extends Activity
 {

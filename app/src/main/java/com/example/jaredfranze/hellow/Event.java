@@ -5,7 +5,7 @@ import android.os.Environment;
 import java.util.Calendar;
 
 /**
- * Created by jfranze0226 on 11/10/14.
+ * Created by Jared.Franze on 11/10/14.
  */
 public class Event
 {

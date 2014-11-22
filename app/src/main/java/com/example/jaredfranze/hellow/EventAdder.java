@@ -7,7 +7,7 @@ import android.provider.CalendarContract;
 import android.content.Context;
 
 /**
- * Created by Jared.Franze on 11/13/2014.
+ * Created by Taber on 11/13/2014.
  */
 public class EventAdder
 {

@@ -8,7 +8,7 @@ import android.net.Uri;
 import android.provider.CalendarContract;
 
 /**
- * Created by Jared.Franze on 11/13/2014.
+ * Created by Taber on 11/13/2014.
  */
 public class EventUpdater
 {

@@ -5,6 +5,10 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
+/**
+ * Created by izuchukwuelechi on 11/13/14.
+ */
+
 public class DayHeaderItem implements Item {
     public Calendar day;
 

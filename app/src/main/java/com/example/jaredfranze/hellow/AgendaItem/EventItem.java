@@ -8,6 +8,10 @@ import java.util.Calendar;
 
 import com.example.jaredfranze.hellow.Event;
 
+/**
+ * Created by izuchukwuelechi on 11/13/14.
+ */
+
 public class EventItem implements Item {
 
     public static final int ITEM_TYPE_EVENT = 0;

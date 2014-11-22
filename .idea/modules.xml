@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Hellow.iml" filepath="$PROJECT_DIR$/Hellow.iml" />
+      <module fileurl="file://$PROJECT_DIR$/CalendarApp.iml" filepath="$PROJECT_DIR$/CalendarApp.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

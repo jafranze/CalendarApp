@@ -268,7 +268,6 @@ public class AddEvent extends Activity {
     }
 
     public void didClickEventReminder(View v) {
-        System.out.println("screw lingming");
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Set Reminder")
                 .setItems(R.array.reminders_array, new DialogInterface.OnClickListener() {
