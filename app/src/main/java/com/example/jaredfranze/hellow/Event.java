@@ -175,7 +175,7 @@ public class Event
         YEAR = calendar.get(Calendar.YEAR);
         MONTH = calendar.get(Calendar.MONTH);
         DAY = calendar.get(Calendar.DAY_OF_MONTH);
-        HOUR = calendar.get(Calendar.HOUR);
+        HOUR = calendar.get(Calendar.HOUR_OF_DAY);
         MINUTES = calendar.get(Calendar.MINUTE);
         SECONDS = calendar.get(Calendar.SECOND);
         startDate = new Date(YEAR, MONTH, DAY, HOUR, MINUTES, SECONDS);
@@ -197,7 +197,7 @@ public class Event
         YEAR = calendar.get(Calendar.YEAR);
         MONTH = calendar.get(Calendar.MONTH);
         DAY = calendar.get(Calendar.DAY_OF_MONTH);
-        HOUR = calendar.get(Calendar.HOUR);
+        HOUR = calendar.get(Calendar.HOUR_OF_DAY);
         MINUTES = calendar.get(Calendar.MINUTE);
         SECONDS = calendar.get(Calendar.SECOND);
         endDate = new Date(YEAR, MONTH, DAY, HOUR, MINUTES, SECONDS);

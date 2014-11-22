@@ -1,3 +1,6 @@
+package com.example.jaredfranze.hellow.WeatherApp;
+
+import java.io.Serializable;
 
 public class Location implements Serializable {
 

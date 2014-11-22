@@ -219,7 +219,7 @@ public class Agenda extends Activity {
                 for (int e = 0; e < dayEvents.size(); e++) {
                     Event event = dayEvents.get(e);
                     Calendar eventc = Calendar.getInstance();
-                    eventc.set(event.getStartDate().getYear(), (event.getStartDate().getMonth() - 1), (event.getStartDate().getDay() - 1), event.getStartDate().getHours(), event.getStartDate().getMinutes(), event.getStartDate().getSeconds());
+                    eventc.set(event.getStartDate().getYear(), (event.getStartDate().getMonth() - 1), (event.getStartDate().getDay()), event.getStartDate().getHours(), event.getStartDate().getMinutes(), event.getStartDate().getSeconds());
                     EventItem eventItem = new EventItem(event, event.eventName, eventc, null, EventItem.ITEM_TYPE_EVENT, (event.getReminder() != 0));
                     items.add(eventItem);
                 }
@@ -303,12 +303,12 @@ public class Agenda extends Activity {
 
             // Get event's day key
             Calendar todayc = Calendar.getInstance();
-            todayc.set(Calendar.HOUR, 0);
+            todayc.set(Calendar.HOUR_OF_DAY, 0);
             todayc.set(Calendar.MINUTE, 0);
             todayc.set(Calendar.SECOND, 0);
 
             Calendar eventc = Calendar.getInstance();
-            eventc.set(event.getStartDate().getYear(), (event.getStartDate().getMonth() - 1), (event.getStartDate().getDay() - 1), event.getStartDate().getHours(), event.getStartDate().getMinutes(), event.getStartDate().getSeconds());
+            eventc.set(event.getStartDate().getYear(), (event.getStartDate().getMonth() - 1), (event.getStartDate().getDay()), event.getStartDate().getHours(), event.getStartDate().getMinutes(), event.getStartDate().getSeconds());
             String key = getDayKey(eventc);
 
             // event check, kill past events
@@ -328,6 +328,7 @@ public class Agenda extends Activity {
                 dayEvents.add(event);
                 events.put(key, dayEvents);
             }
+            System.out.println(event.toString());
         }
     }
 

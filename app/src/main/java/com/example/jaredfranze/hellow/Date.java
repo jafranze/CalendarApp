@@ -87,4 +87,18 @@ public class Date
         cal.set(YEAR,MONTH,DAY,HOURS,MINUTES);
         return cal.getTimeInMillis();
     }
+
+
+    public String toString()
+    {
+        String string = null;
+        string = string + "YEAR IS: " + YEAR + " ";
+        string = string + "DAY IS " + DAY + " ";
+        string = string + "MONTH IS: " + MONTH + " ";
+        string = string + "HOURS IS " + HOURS + " ";
+        string = string + "MINUTES IS: " + MINUTES + " ";
+        string = string + "SECONDS IS " + SECONDS + " ";
+
+        return string;
+    }
 }

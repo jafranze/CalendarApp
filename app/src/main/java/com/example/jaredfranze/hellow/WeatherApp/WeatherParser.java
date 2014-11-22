@@ -1,9 +1,9 @@
+package com.example.jaredfranze.hellow.WeatherApp;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import Location;
-import Weather;
 
 
 public class WeatherParser {

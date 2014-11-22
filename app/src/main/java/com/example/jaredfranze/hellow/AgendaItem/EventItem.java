@@ -49,9 +49,9 @@ public class EventItem implements Item {
 
         int ampm = startDate.get(Calendar.AM_PM);
 
-        if ((ampm == 0) && (startDate.get(Calendar.HOUR) == 12)) {
+        if ((ampm == 0) && (startDate.get(Calendar.HOUR) == 0)) {
             return "Midnight";
-        } else if ((ampm == 1) && (startDate.get(Calendar.HOUR) == 12)) {
+        } else if ((ampm == 1) && (startDate.get(Calendar.HOUR) == 0)) {
             return "Noon";
         }
 

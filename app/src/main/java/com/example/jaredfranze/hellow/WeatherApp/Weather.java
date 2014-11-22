@@ -1,3 +1,5 @@
+package com.example.jaredfranze.hellow.WeatherApp;
+
 public class Weather {
 	
 	public Location location;

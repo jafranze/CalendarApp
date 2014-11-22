@@ -103,10 +103,10 @@ public class AddEvent extends Activity {
 
             Calendar today = Calendar.getInstance();
 
-            startDate = new Date(today.get(Calendar.YEAR), today.get(Calendar.MONTH), today.get(Calendar.DAY_OF_MONTH) + 1, today.get(Calendar.HOUR_OF_DAY), today.get(Calendar.MINUTE), today.get(Calendar.SECOND));
+            startDate = new Date(today.get(Calendar.YEAR), today.get(Calendar.MONTH), today.get(Calendar.DAY_OF_MONTH), today.get(Calendar.HOUR_OF_DAY), today.get(Calendar.MINUTE), today.get(Calendar.SECOND));
 
             today.add(Calendar.HOUR, 1);
-            endDate = new Date(today.get(Calendar.YEAR), today.get(Calendar.MONTH), today.get(Calendar.DAY_OF_MONTH) + 1, today.get(Calendar.HOUR_OF_DAY), today.get(Calendar.MINUTE), today.get(Calendar.SECOND));
+            endDate = new Date(today.get(Calendar.YEAR), today.get(Calendar.MONTH), today.get(Calendar.DAY_OF_MONTH), today.get(Calendar.HOUR_OF_DAY), today.get(Calendar.MINUTE), today.get(Calendar.SECOND));
 
             voiceib.setVisibility(View.INVISIBLE);
 
@@ -134,7 +134,7 @@ public class AddEvent extends Activity {
         // refresh big date
 
         Date date = startDate;
-        datec.set(date.getYear(), (date.getMonth() - 1), (date.getDay() - 1), date.getHours(), date.getMinutes(), date.getSeconds());
+        datec.set(date.getYear(), (date.getMonth() - 1), (date.getDay()), date.getHours(), date.getMinutes(), date.getSeconds());
 
         Calendar todayc = Calendar.getInstance();
 
@@ -176,13 +176,13 @@ public class AddEvent extends Activity {
         Calendar datec = Calendar.getInstance();
         Date date = (isStart ? date = startDate : endDate);
 
-        datec.set(date.getYear(), (date.getMonth() - 1), (date.getDay() - 1), date.getHours(), date.getMinutes(), date.getSeconds());
+        datec.set(date.getYear(), (date.getMonth() - 1), (date.getDay()), date.getHours(), date.getMinutes(), date.getSeconds());
 
         int ampm = datec.get(Calendar.AM_PM);
 
-        if ((ampm == 0) && (datec.get(Calendar.HOUR) == 12)) {
+        if ((ampm == 0) && (datec.get(Calendar.HOUR) == 0)) {
             return "Midnight";
-        } else if ((ampm == 1) && (datec.get(Calendar.HOUR) == 12)) {
+        } else if ((ampm == 1) && (datec.get(Calendar.HOUR) == 0)) {
             return "Noon";
         }
 
@@ -198,7 +198,7 @@ public class AddEvent extends Activity {
     // onClick Listeners
 
     public void didClickEventDate(View v) {
-        new DatePickerDialog(this, dateListener, startDate.getYear(), startDate.getMonth() - 1, startDate.getDay() - 1).show();
+        new DatePickerDialog(this, dateListener, startDate.getYear(), startDate.getMonth() - 1, startDate.getDay()).show();
     }
 
     private DatePickerDialog.OnDateSetListener dateListener = new DatePickerDialog.OnDateSetListener()
@@ -208,10 +208,10 @@ public class AddEvent extends Activity {
         {
             startDate.MONTH = m;
             startDate.YEAR = y;
-            startDate.DAY = d + 1;
+            startDate.DAY = d;
             endDate.MONTH = m;
             endDate.YEAR = y;
-            endDate.DAY = d + 1;
+            endDate.DAY = d;
             refreshAllDates();
         }
     };
@@ -365,6 +365,9 @@ public class AddEvent extends Activity {
         } else {
             myDB.updateEvent(myDB.findIndexOfEventWithID(event.getID()), event);
         }
+
+        System.out.println(startDate.toString());
+        System.out.println(endDate.toString());
 
         finish();
     }
