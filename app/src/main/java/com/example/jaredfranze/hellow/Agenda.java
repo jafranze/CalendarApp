@@ -6,6 +6,9 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.ViewPager;
 import android.text.format.DateUtils;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -34,7 +37,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 
-public class Agenda extends Activity {
+public class Agenda extends FragmentActivity {
 
     //
     // UI vars
@@ -47,6 +50,9 @@ public class Agenda extends Activity {
     TextView todayViewMonthTextView;
 
     // WeekView UI Items
+
+    ViewPager weekViewPager;
+    ScreenSlidePagerAdapter weekViewAdapter;
 
     ArrayList<TextView> weekViewDayTextView;
     ArrayList<TextView> weekViewBusyTextView;
@@ -110,7 +116,7 @@ public class Agenda extends Activity {
 
         // Set Week View to Today
 
-        setWeekViewToThisWeek();
+        //setWeekViewToThisWeek();
 
         // Initialize Agenda
 
@@ -147,6 +153,21 @@ public class Agenda extends Activity {
 
             }
         });
+
+        weekViewPager = (ViewPager) findViewById(R.id.weekViewPager);
+        weekViewAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager(), Calendar.getInstance());
+        weekViewPager.setAdapter(weekViewAdapter);
+
+        weekViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            public void onPageScrollStateChanged(int state) {}
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+
+            public void onPageSelected(int position) {
+                //weekViewAdapter.setItem(position);
+            }
+        });
+
+        weekViewPager.setCurrentItem(weekViewAdapter.getInitialPosition());
 
     }
 
@@ -289,6 +310,12 @@ public class Agenda extends Activity {
     }
 
     private void setWeekViewToWeekOf(Calendar datec) {
+        weekViewAdapter.setAnchorDate(datec);
+        weekViewAdapter.notifyDataSetChanged();
+        weekViewPager.setCurrentItem(weekViewAdapter.getInitialPosition());
+    }
+
+    private void setWeekViewToWeekOf_deprecated(Calendar datec) {
         // Get the first day of the week of this day
 
         int passedDay = datec.get(Calendar.DAY_OF_YEAR);
@@ -379,6 +406,10 @@ public class Agenda extends Activity {
     String getDayKey(Calendar day) {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         return formatter.format(day.getTime());
+    }
+
+    public HashMap<String, ArrayList<Event>> getEvents() {
+        return events;
     }
 
     // Action Bar

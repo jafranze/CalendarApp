@@ -155,7 +155,7 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:text="Event Name"
+                android:hint="Event Name"
                 android:gravity="center_vertical|left"
                 android:textColor="#4F4F4F"
                 android:textSize="15dp"
@@ -188,7 +188,7 @@
             <TextView
                 android:layout_width="100dp"
                 android:layout_height="40dp"
-                android:text="Description"
+                android:hint="Description"
                 android:gravity="center_vertical|left"
                 android:textColor="#4F4F4F"
                 android:textSize="15dp"
@@ -210,7 +210,7 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="40dp"
-                android:text="Location"
+                android:hint="Location"
                 android:gravity="center_vertical|left"
                 android:textColor="#4F4F4F"
                 android:textSize="15dp"
