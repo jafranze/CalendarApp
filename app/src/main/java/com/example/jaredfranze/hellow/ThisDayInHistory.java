@@ -52,16 +52,32 @@ public class ThisDayInHistory {
 
     public void parseText(String text)
     {
+        StringBuilder builder = new StringBuilder();
         String[] split = text.split("link:");
         String[] split2 = split[1].split("description:");
+
         String[] split3 = split2[1].split("\\.");
+        String temp = split3[1];
+        builder.append(split3[0]);
+        /*
+        while(temp.substring(0,1) != " ")
+        {
+            split3 = temp.split("i");
+            temp = split3[1];
+            builder.append(split3[0]);
+        }
+        */
         String[] titleSplit = split[0].split(": ",2);
         //split[0] holds title
         //split2[0] holds link
         //split3[0] holds description
         title = titleSplit[1];
         link = split2[0];
-        description = split3[0].substring(7) + ".";
+
+        String finalString = builder.toString();
+        //description = split3[0].substring(7);
+        description = finalString.substring(7);
+        //System.out.println(split3[0].substring(0, 7));
     }
 
     public String getDescription()
