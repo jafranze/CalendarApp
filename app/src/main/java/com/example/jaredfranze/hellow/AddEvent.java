@@ -51,7 +51,7 @@ public class AddEvent extends Activity {
     TextView locationtv;
 
     ImageButton reminderib;
-    ImageButton voiceib;
+    ImageButton voiceib, deleteib;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +70,7 @@ public class AddEvent extends Activity {
 
         reminderib = (ImageButton)findViewById(R.id.add_event_reminder);
         voiceib = (ImageButton)findViewById(R.id.add_event_voice);
+        deleteib = (ImageButton)findViewById(R.id.add_event_cancel);
 
         voiceib.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -102,6 +103,8 @@ public class AddEvent extends Activity {
             reminderib.setAlpha(event.reminder != 0 ? 1.0f : 0.3f);
 
             refreshAllDates();
+
+            deleteib.isClickable();
         } else {
             event = new Event();
             newEvent = true;
@@ -115,6 +118,8 @@ public class AddEvent extends Activity {
             endDate = new Date(today.get(Calendar.YEAR), today.get(Calendar.MONTH), today.get(Calendar.DAY_OF_MONTH), today.get(Calendar.HOUR_OF_DAY), today.get(Calendar.MINUTE), today.get(Calendar.SECOND));
 
             voiceib.setVisibility(View.INVISIBLE);
+            deleteib.setVisibility(View.INVISIBLE);
+
 
             reminderib.setAlpha(0.3f);
             remindertime = 0;
@@ -386,6 +391,13 @@ public class AddEvent extends Activity {
     }
 
     public void didClickEventCancel(View v) {
+        finish();
+    }
+
+    public void didClickEventDelete(View v)
+    {
+        CalDBCommun myDB = new CalDBCommun(this);
+        myDB.removeEvent(event);
         finish();
     }
 

@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.jaredfranze.hellow.AddEvent"
-    android:background="@android:color/transparent">
+    android:background="@android:color/transparent"
+    android:onClick="didClickEventCancel">
 
 
     <RelativeLayout
@@ -91,13 +92,13 @@
         <ImageButton
             android:layout_width="55dp"
             android:layout_height="70dp"
-            android:src="@drawable/ic_clear_black_24dp"
+            android:src="@drawable/ic_delete_black_24dp"
             style="@android:style/Widget.DeviceDefault.Button.Borderless"
             android:id="@+id/add_event_cancel"
             android:layout_toLeftOf="@+id/add_event_done"
 
-            android:clickable="true"
-            android:onClick="didClickEventCancel"/>
+
+            android:onClick="didClickEventDelete"/>
 
         <ImageButton
             android:layout_width="65dp"
