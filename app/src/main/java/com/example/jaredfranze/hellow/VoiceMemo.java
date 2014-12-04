@@ -1,5 +1,6 @@
 package com.example.jaredfranze.hellow;
 
+import java.io.File;
 import java.io.IOException;
 
 import android.content.Intent;
@@ -25,6 +26,7 @@ public class VoiceMemo extends Activity {
     private String outputFile = null;
     private ImageButton start,stop,play,save,erase;
     long event;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +66,12 @@ public class VoiceMemo extends Activity {
         myAudioRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
         myAudioRecorder.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
         myAudioRecorder.setOutputFile(outputFile);
+
+        File ourFile = new File(outputFile);
+        if (ourFile.exists())
+        {
+            erase.setEnabled(true);
+        }
 
     }
 
@@ -112,6 +120,11 @@ public class VoiceMemo extends Activity {
      */
     public void erase(View view)
     {
+        File ourFile = new File(outputFile);
+        if (ourFile.exists())
+        {
+            ourFile.delete();
+        }
         stop.setEnabled(false);
         play.setEnabled(false);
         erase.setEnabled(false);
@@ -128,6 +141,11 @@ public class VoiceMemo extends Activity {
         SEND FILE TO EVENT
      */
     public void save(View view)
+    {
+        finish();
+    }
+
+    public void cancel(View view)
     {
         finish();
     }
