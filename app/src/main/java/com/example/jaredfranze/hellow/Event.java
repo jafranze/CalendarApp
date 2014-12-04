@@ -239,6 +239,10 @@ public class Event
      *********/
     public String getLocation()
     {
+        if(location == null)
+        {
+            location = "Add Location";
+        }
         return location;
     }
     public void setLoction(String eLocation)
@@ -287,6 +291,10 @@ public class Event
     }
     String getDescription()
     {
+        if (eventDescription == null)
+        {
+            eventDescription = "Add Description";
+        }
         return eventDescription;
     }
     /******************

@@ -47,6 +47,8 @@ public class AddEvent extends Activity {
     TextView starttv;
     TextView endtv;
     TextView titletv;
+    TextView descriptiontv;
+    TextView locationtv;
 
     ImageButton reminderib;
     ImageButton voiceib;
@@ -63,6 +65,8 @@ public class AddEvent extends Activity {
         starttv = (TextView)findViewById(R.id.add_event_time_start);
         endtv = (TextView)findViewById(R.id.add_event_end);
         titletv = (TextView)findViewById(R.id.add_event_title);
+        descriptiontv = (TextView)findViewById(R.id.add_event_description);
+        locationtv = (TextView)findViewById(R.id.add_event_location);
 
         reminderib = (ImageButton)findViewById(R.id.add_event_reminder);
         voiceib = (ImageButton)findViewById(R.id.add_event_voice);
@@ -92,6 +96,8 @@ public class AddEvent extends Activity {
             remindertime = event.getReminder();
 
             titletv.setText(event.getName());
+            descriptiontv.setText(event.getDescription());
+            locationtv.setText(event.getLocation());
 
             reminderib.setAlpha(event.reminder != 0 ? 1.0f : 0.3f);
 
@@ -99,7 +105,7 @@ public class AddEvent extends Activity {
         } else {
             event = new Event();
             newEvent = true;
-            event.changeName("All-Nighter");
+            event.changeName("Event Name");
 
             Calendar today = Calendar.getInstance();
 
@@ -180,9 +186,9 @@ public class AddEvent extends Activity {
 
         int ampm = datec.get(Calendar.AM_PM);
 
-        if ((ampm == 0) && (datec.get(Calendar.HOUR) == 0)) {
+        if ((ampm == 0) && (datec.get(Calendar.HOUR) == 0) && (datec.get(Calendar.MINUTE) == 0)) {
             return "Midnight";
-        } else if ((ampm == 1) && (datec.get(Calendar.HOUR) == 0)) {
+        } else if ((ampm == 1) && (datec.get(Calendar.HOUR) == 0) && (datec.get(Calendar.MINUTE) == 0)) {
             return "Noon";
         }
 
@@ -259,6 +265,48 @@ public class AddEvent extends Activity {
                         Editable value = input.getText();
                         event.changeName(value.toString());
                         titletv.setText(value.toString());
+                    }
+                }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                // Do nothing.
+            }
+        }).show();
+    }
+
+    public void didClickEventDescription(View v) {
+        final EditText input = new EditText(this);
+        input.setText(event.getDescription());
+        input.selectAll();
+        new AlertDialog.Builder(this)
+                .setTitle("Description")
+                .setMessage("")
+                .setView(input)
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        Editable value = input.getText();
+                        event.changeDescription(value.toString());
+                        descriptiontv.setText(value.toString());
+                    }
+                }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                // Do nothing.
+            }
+        }).show();
+    }
+
+    public void didClickEventLocation(View v) {
+        final EditText input = new EditText(this);
+        input.setText(event.getLocation());
+        input.selectAll();
+        new AlertDialog.Builder(this)
+                .setTitle("Location")
+                .setMessage("")
+                .setView(input)
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        Editable value = input.getText();
+                        event.setLoction(value.toString());
+                        locationtv.setText(value.toString());
                     }
                 }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
