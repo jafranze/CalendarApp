@@ -9,9 +9,11 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.app.Activity;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+import android.widget.ImageButton;
 
 /**
  * Created by Jared.Franze on 11/17/2014.
@@ -21,7 +23,7 @@ public class VoiceMemo extends Activity {
 
     private MediaRecorder myAudioRecorder;
     private String outputFile = null;
-    private Button start,stop,play,save,erase;
+    private ImageButton start,stop,play,save,erase;
     long event;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,19 +35,21 @@ public class VoiceMemo extends Activity {
         }
 
         setContentView(R.layout.activity_voicememo);
-        start = (Button)findViewById(R.id.button1);
-        stop = (Button)findViewById(R.id.button2);
-        play = (Button)findViewById(R.id.button3);
-        erase = (Button)findViewById(R.id.button4);
-        save = (Button)findViewById(R.id.button5);
+        start = (ImageButton)findViewById(R.id.button1);
+        stop = (ImageButton)findViewById(R.id.button2);
+        play = (ImageButton)findViewById(R.id.button3);
+        erase = (ImageButton)findViewById(R.id.button4);
+        save = (ImageButton)findViewById(R.id.button5);
 
-        final Button swapView =(Button)findViewById(R.id.button5);
+        /*
+        final ImageButton swapView =(ImageButton)findViewById(R.id.button5);
         swapView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(view.getContext(),Agenda.class));
             }
         });
+        */
 
         stop.setEnabled(false);
         play.setEnabled(false);
@@ -123,6 +127,10 @@ public class VoiceMemo extends Activity {
     /*
         SEND FILE TO EVENT
      */
+    public void save(View view)
+    {
+        finish();
+    }
 
 
     @Override
