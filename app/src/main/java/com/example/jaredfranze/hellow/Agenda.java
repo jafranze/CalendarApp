@@ -60,6 +60,7 @@ public class Agenda extends Activity {
     ListView agendaListView;
     ArrayList<Item> agendaItems;
     AgendaArrayAdapter adapter;
+    boolean passedIntent = false;
 
     //
     // Methods
@@ -155,7 +156,34 @@ public class Agenda extends Activity {
         events.clear();
         loadEvents();
         loadAgenda();
-        setWeekViewToThisWeek();
+        int sentMonth;
+        int sentYear;
+        int sentDay;
+        int weekDay;
+        int yearDay;
+        long millis;
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+
+            sentMonth = extras.getInt("month");
+            sentDay = extras.getInt("day");
+            sentYear = extras.getInt("year");
+
+            Calendar passedCal = Calendar.getInstance();
+            millis = extras.getLong("millis");
+            passedCal.setTimeInMillis(millis);
+            extras = null;
+            passedIntent = true;
+            setWeekViewToThisWeek((sentMonth - 1), sentDay, sentYear);
+            System.out.println("SETTING FROM INTENT" + sentMonth + sentDay + sentYear);
+        }
+        else
+        {
+            setWeekViewToThisWeek();
+            setActionBarDay();
+            passedIntent = false;
+        }
     }
 
     // Agenda
@@ -243,6 +271,16 @@ public class Agenda extends Activity {
     private void setWeekViewToThisWeek() {
         setWeekViewToWeekOf(Calendar.getInstance());
     }
+    private void setWeekViewToThisWeek(int m, int d, int y)
+    {
+        Calendar now = Calendar.getInstance();
+        Date myDate = new Date(y, m, d, now.get(Calendar.HOUR), now.get(Calendar.MINUTE), now.get(Calendar.SECOND));
+        Calendar datec = Calendar.getInstance();
+        datec.set(myDate.getYear(), myDate.getMonth(), myDate.getDay(), myDate.getHours(), myDate.getMinutes(), myDate.getSeconds());
+
+        setWeekViewToWeekOf(datec);
+        setActionBarDay(myDate);
+    }
 
     private void setWeekViewToWeekOf(Date date) {
         Calendar datec = Calendar.getInstance();
@@ -252,6 +290,8 @@ public class Agenda extends Activity {
 
     private void setWeekViewToWeekOf(Calendar datec) {
         // Get the first day of the week of this day
+
+        int passedDay = datec.get(Calendar.DAY_OF_YEAR);
 
         while (datec.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY) {
             datec.add(Calendar.DAY_OF_YEAR, -1);
@@ -265,6 +305,7 @@ public class Agenda extends Activity {
             dayTextView.setText(dayOfTheWeek);
 
             Calendar todayc = Calendar.getInstance();
+
             todayc.set(Calendar.HOUR, 0);
             todayc.set(Calendar.MINUTE, 0);
             todayc.set(Calendar.SECOND, 0);
@@ -279,7 +320,10 @@ public class Agenda extends Activity {
             //busyTextView.setVisibility(events.containsKey(getDayKey(datec)) ? View.VISIBLE : View.INVISIBLE);
             busyTextView.setAlpha(events.containsKey(getDayKey(datec)) ? 1.0f : 0.25f);
 
-            todayc = Calendar.getInstance();
+
+ 
+                todayc = Calendar.getInstance();
+
             if (datec.get(Calendar.YEAR) == todayc.get(Calendar.YEAR)
                     && datec.get(Calendar.DAY_OF_YEAR) == todayc.get(Calendar.DAY_OF_YEAR)) {
                 // It's today

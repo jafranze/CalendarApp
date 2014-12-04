@@ -35,7 +35,7 @@
         <activity
             android:name="com.example.jaredfranze.hellow.MonthView"
             android:label="Month View"
-            android:theme="@android:style/Theme.Holo.NoActionBar">
+            android:theme="@style/Theme.AddEvent">
         </activity>
         <activity
             android:name="com.example.jaredfranze.hellow.AddEvent"

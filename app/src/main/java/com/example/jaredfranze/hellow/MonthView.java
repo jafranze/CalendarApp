@@ -8,7 +8,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+
 import android.widget.CalendarView;
 import android.widget.CalendarView.OnDateChangeListener;
 import android.app.DatePickerDialog;
@@ -31,11 +38,14 @@ public class MonthView extends Activity
     Calendar currDate;
     CalendarView cal;
     int year, month, day;
+    long date;
     Button selectMonth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_month_view);
 
 
@@ -53,6 +63,8 @@ public class MonthView extends Activity
         cal = (CalendarView) findViewById(R.id.calendar_view);
         selectMonth = (Button) findViewById(R.id.selectMonth);
 
+        date = cal.getDate();
+
         OnClickListener ocl = new OnClickListener()
         {
 
@@ -65,6 +77,21 @@ public class MonthView extends Activity
 
         selectMonth.setOnClickListener(ocl);
 
+        cal.setOnDateChangeListener(new OnDateChangeListener() {
+            public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
+                if (cal.getDate() != date) {
+                    date = cal.getDate();
+                    Toast.makeText(view.getContext(), (month + 1) + "/" + dayOfMonth + "/" + year, Toast.LENGTH_LONG).show();
+                    Intent i = new Intent(getApplicationContext(), Agenda.class);
+                    i.putExtra("month", month);
+                    i.putExtra("day", dayOfMonth);
+                    i.putExtra("year", year);
+                    startActivity(i);
+                }
+            }
+        });
+
+        /*
         OnDateChangeListener odc = new OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(CalendarView calendarView, int y, int m, int d) {
@@ -75,6 +102,7 @@ public class MonthView extends Activity
         };
 
         cal.setOnDateChangeListener(odc);
+        */
     }
 
     private DatePickerDialog.OnDateSetListener dListener = new DatePickerDialog.OnDateSetListener()
