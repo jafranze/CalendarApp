@@ -29,7 +29,10 @@
                 android:typeface="sans"
                 android:fontFamily="sans-serif-light"
                 android:gravity="center"
-                android:textColor="#CCCCCC"/>
+                android:textColor="#CCCCCC"
+
+                android:clickable="true"
+                android:onClick="day1"/>
             <TextView
                 android:layout_weight="1"
                 android:layout_height="match_parent"
@@ -38,7 +41,10 @@
                 android:typeface="sans"
                 android:fontFamily="sans-serif-light"
                 android:gravity="center"
-                android:textColor="#868686"/>
+                android:textColor="#868686"
+
+                android:clickable="true"
+                android:onClick="day2"/>
             <TextView
                 android:layout_weight="1"
                 android:layout_height="match_parent"
@@ -47,7 +53,10 @@
                 android:typeface="sans"
                 android:fontFamily="sans-serif-light"
                 android:gravity="center"
-                android:textColor="#868686"/>
+                android:textColor="#868686"
+
+                android:clickable="true"
+                android:onClick="day3"/>
             <TextView
                 android:layout_weight="1"
                 android:layout_height="match_parent"
@@ -56,7 +65,10 @@
                 android:typeface="sans"
                 android:fontFamily="sans-serif-light"
                 android:gravity="center"
-                android:textColor="#868686"/>
+                android:textColor="#868686"
+
+                android:clickable="true"
+                android:onClick="day4"/>
             <TextView
                 android:layout_weight="1"
                 android:layout_height="match_parent"
@@ -65,7 +77,10 @@
                 android:typeface="sans"
                 android:fontFamily="sans-serif-light"
                 android:gravity="center"
-                android:textColor="#868686"/>
+                android:textColor="#868686"
+
+                android:clickable="true"
+                android:onClick="day5"/>
             <TextView
                 android:layout_weight="1"
                 android:layout_height="match_parent"
@@ -75,7 +90,10 @@
                 android:typeface="sans"
                 android:fontFamily="sans-serif-light"
                 android:gravity="center"
-                android:textColor="#868686"/>
+                android:textColor="#868686"
+
+                android:clickable="true"
+                android:onClick="day6"/>
             <TextView
                 android:layout_weight="1"
                 android:layout_height="match_parent"
@@ -84,7 +102,10 @@
                 android:typeface="sans"
                 android:fontFamily="sans-serif-light"
                 android:gravity="center"
-                android:textColor="#CCCCCC"/>
+                android:textColor="#CCCCCC"
+
+                android:clickable="true"
+                android:onClick="day7"/>
         </TableRow>
         <TableRow
             android:paddingTop="20dp"
@@ -100,7 +121,10 @@
                 android:fontFamily="sans-serif-light"
                 android:gravity="center"
                 android:textColor="#4F4F4F"
-                android:id="@+id/weekViewDay1"/>
+                android:id="@+id/weekViewDay1"
+
+                android:clickable="true"
+                android:onClick="day1"/>
             <TextView
                 android:layout_weight="1"
                 android:layout_height="match_parent"
@@ -110,7 +134,10 @@
                 android:fontFamily="sans-serif-light"
                 android:gravity="center"
                 android:textColor="#4F4F4F"
-                android:id="@+id/weekViewDay2"/>
+                android:id="@+id/weekViewDay2"
+
+                android:clickable="true"
+                android:onClick="day2"/>
             <TextView
                 android:layout_weight="1"
                 android:layout_height="match_parent"
@@ -120,7 +147,10 @@
                 android:fontFamily="sans-serif-light"
                 android:gravity="center"
                 android:textColor="#4F4F4F"
-                android:id="@+id/weekViewDay3"/>
+                android:id="@+id/weekViewDay3"
+
+                android:clickable="true"
+                android:onClick="day3"/>
             <TextView
                 android:layout_weight="1"
                 android:layout_height="match_parent"
@@ -130,7 +160,10 @@
                 android:fontFamily="sans-serif-light"
                 android:gravity="center"
                 android:textColor="#4F4F4F"
-                android:id="@+id/weekViewDay4"/>
+                android:id="@+id/weekViewDay4"
+
+                android:clickable="true"
+                android:onClick="day4"/>
             <TextView
                 android:layout_weight="1"
                 android:layout_height="match_parent"
@@ -140,7 +173,10 @@
                 android:fontFamily="sans-serif-light"
                 android:gravity="center"
                 android:textColor="#4F4F4F"
-                android:id="@+id/weekViewDay5"/>
+                android:id="@+id/weekViewDay5"
+
+                android:clickable="true"
+                android:onClick="day5"/>
             <TextView
                 android:layout_weight="1"
                 android:layout_height="match_parent"
@@ -151,7 +187,10 @@
                 android:fontFamily="sans-serif-light"
                 android:gravity="center"
                 android:textColor="#4F4F4F"
-                android:id="@+id/weekViewDay6"/>
+                android:id="@+id/weekViewDay6"
+
+                android:clickable="true"
+                android:onClick="day6"/>
             <TextView
                 android:layout_weight="1"
                 android:layout_height="match_parent"
@@ -161,7 +200,10 @@
                 android:fontFamily="sans-serif-light"
                 android:gravity="center"
                 android:textColor="#4F4F4F"
-                android:id="@+id/weekViewDay7"/>
+                android:id="@+id/weekViewDay7"
+
+                android:clickable="true"
+                android:onClick="day7"/>
         </TableRow>
         <TableRow
             android:layout_height="wrap_content"
@@ -176,7 +218,10 @@
                 android:fontFamily="sans-serif-light"
                 android:gravity="center"
                 android:textColor="#CCCCCC"
-                android:id="@+id/weekViewBusy1"/>
+                android:id="@+id/weekViewBusy1"
+
+                android:clickable="true"
+                android:onClick="day1"/>
             <TextView
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
@@ -186,7 +231,10 @@
                 android:fontFamily="sans-serif-light"
                 android:gravity="center"
                 android:textColor="#CCCCCC"
-                android:id="@+id/weekViewBusy2"/>
+                android:id="@+id/weekViewBusy2"
+
+                android:clickable="true"
+                android:onClick="day2"/>
             <TextView
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
@@ -196,7 +244,10 @@
                 android:fontFamily="sans-serif-light"
                 android:gravity="center"
                 android:textColor="#CCCCCC"
-                android:id="@+id/weekViewBusy3"/>
+                android:id="@+id/weekViewBusy3"
+
+                android:clickable="true"
+                android:onClick="day3"/>
             <TextView
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
@@ -206,7 +257,10 @@
                 android:fontFamily="sans-serif-light"
                 android:gravity="center"
                 android:textColor="#CCCCCC"
-                android:id="@+id/weekViewBusy4"/>
+                android:id="@+id/weekViewBusy4"
+
+                android:clickable="true"
+                android:onClick="day4"/>
             <TextView
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
@@ -216,7 +270,10 @@
                 android:fontFamily="sans-serif-light"
                 android:gravity="center"
                 android:textColor="#CCCCCC"
-                android:id="@+id/weekViewBusy5"/>
+                android:id="@+id/weekViewBusy5"
+
+                android:clickable="true"
+                android:onClick="day5"/>
             <TextView
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
@@ -227,7 +284,10 @@
                 android:fontFamily="sans-serif-light"
                 android:gravity="center"
                 android:textColor="#CCCCCC"
-                android:id="@+id/weekViewBusy6"/>
+                android:id="@+id/weekViewBusy6"
+
+                android:clickable="true"
+                android:onClick="day6"/>
             <TextView
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
@@ -237,7 +297,10 @@
                 android:typeface="sans"
                 android:gravity="center"
                 android:textColor="#CCCCCC"
-                android:id="@+id/weekViewBusy7"/>
+                android:id="@+id/weekViewBusy7"
+
+                android:clickable="true"
+                android:onClick="day7"/>
         </TableRow>
         <TableRow>
             <View

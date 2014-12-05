@@ -17,6 +17,7 @@ public class EventItem implements Item {
     public static final int ITEM_TYPE_EVENT = 0;
     public static final int ITEM_TYPE_WEATHER = 1;
     public static final int ITEM_TYPE_HISTORY = 2;
+    public static final int ITEM_TYPE_NOEVENT = 3;
 
     private Event event;
     private String title;
@@ -26,18 +27,28 @@ public class EventItem implements Item {
     private boolean hasReminders;
 
     @Override
+    public Calendar getRepresentativeDate() {
+        return startDate;
+    }
+
+    @Override
     public boolean isHeaderItem() {
         return false;
     }
 
-    public EventItem(Event event, String title, Calendar startDate, EventIcon icon, int isWeatherItem, boolean hasReminders) {
+    public EventItem(Event event, String title, Calendar startDate, EventIcon icon, int itemType, boolean hasReminders) {
+
+        if (itemType == ITEM_TYPE_NOEVENT) {
+            title = "No Events";
+        }
 
         this.event = event;
         this.title = title;
         this.startDate = startDate;
         this.icon = icon;
-        this.itemType = isWeatherItem;
+        this.itemType = itemType;
         this.hasReminders = hasReminders;
+
     }
 
     public String getTitle() {

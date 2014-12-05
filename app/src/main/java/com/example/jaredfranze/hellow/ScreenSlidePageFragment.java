@@ -91,6 +91,56 @@ public class ScreenSlidePageFragment extends Fragment {
         return rootView;
     }
 
+    // on clicks
+
+    public void day1() {
+        didClickDay(1);
+    }
+
+    public void day2() {
+        didClickDay(2);
+    }
+
+    public void day3() {
+        didClickDay(3);
+    }
+
+    public void day4() {
+        didClickDay(4);
+    }
+
+    public void day5() {
+        didClickDay(5);
+    }
+
+    public void day6() {
+        didClickDay(6);
+    }
+
+    public void day7() {
+        didClickDay(7);
+    }
+
+    public void didClickDay(int day) {
+        if (getActivity() != null) {
+            Calendar dayDate = Calendar.getInstance();
+            dayDate.setTimeInMillis(weekOfDate.getTimeInMillis());
+
+            while (dayDate.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY) {
+                dayDate.add(Calendar.DAY_OF_YEAR, -1);
+            }
+
+            for (int i = 1; i < day; i++) {
+                dayDate.add(Calendar.DAY_OF_YEAR, 1);
+            }
+
+            Agenda agendaActivity = (Agenda) getActivity();
+            agendaActivity.scrollToDate(dayDate);
+        }
+    }
+
+    // week view
+
     private void setWeekViewToWeekOf(Calendar datec) {
         // Get the first day of the week of this day
 

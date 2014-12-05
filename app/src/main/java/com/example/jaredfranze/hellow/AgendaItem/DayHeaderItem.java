@@ -13,6 +13,11 @@ public class DayHeaderItem implements Item {
     public Calendar day;
 
     @Override
+    public Calendar getRepresentativeDate() {
+        return day;
+    }
+
+    @Override
     public boolean isHeaderItem() {
         return true;
     }

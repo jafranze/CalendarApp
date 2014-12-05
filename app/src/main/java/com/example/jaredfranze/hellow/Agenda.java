@@ -68,6 +68,7 @@ public class Agenda extends FragmentActivity {
     AgendaArrayAdapter adapter;
     boolean passedIntent = false;
 
+    Calendar scrollToDateWhenLoaded;
     //
     // Methods
     //
@@ -76,6 +77,8 @@ public class Agenda extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_agenda);
+
+        scrollToDateWhenLoaded = Calendar.getInstance();
 
         // Initialize Action Bar TextViews
 
@@ -209,6 +212,31 @@ public class Agenda extends FragmentActivity {
 
     // Agenda
 
+    public void scrollToDate(Calendar date) {
+        if (agendaItems != null) {
+            System.out.println("SEARCHING");
+            for (int i = 0; i < agendaItems.size(); i++) {
+                Item item = agendaItems.get(i);
+
+                if (item.isHeaderItem() == false) {
+                    continue;
+                } else {
+                    Calendar itemDate = item.getRepresentativeDate();
+                    if ((itemDate.get(Calendar.DAY_OF_YEAR) == date.get(Calendar.DAY_OF_YEAR)) && (itemDate.get(Calendar.YEAR) == date.get(Calendar.YEAR))) {
+                        //agendaListView.smoothScrollToPosition(i);
+                        agendaListView.setSelection(i);
+                        System.out.println("FOUND at " + i);
+                        break;
+                    }
+                }
+            }
+        } else {
+            System.out.println("WAITING");
+            scrollToDateWhenLoaded = date;
+        }
+        System.out.println("DONE");
+    }
+
     private void loadAgenda() {
 
         System.out.println("I EXIST la");
@@ -219,7 +247,18 @@ public class Agenda extends FragmentActivity {
             dateKeys.add(entry.getKey());
         }
 
+        // Add headers for 5 years
+
+        Calendar day = Calendar.getInstance();
+
+        for (int i = 0; i < (365*5); i++) {
+            String dayKey = getDayKey(day);
+            if (!events.containsKey(dayKey)) dateKeys.add(dayKey);
+            day.add(Calendar.DAY_OF_YEAR, 1);
+        }
+
         // always add today, always add tomorrow
+        /*
 
         String todayKey = getDayKey(Calendar.getInstance());
         if (!events.containsKey(todayKey)) dateKeys.add(todayKey);
@@ -227,13 +266,13 @@ public class Agenda extends FragmentActivity {
         Calendar tomorrowc = Calendar.getInstance();
         tomorrowc.add(Calendar.DAY_OF_YEAR, 1);
         String tomorrowKey = getDayKey(tomorrowc);
-        if (!events.containsKey(tomorrowKey)) dateKeys.add(tomorrowKey);
+        if (!events.containsKey(tomorrowKey)) dateKeys.add(tomorrowKey);*/
 
         // sort up the keys and get to loading the events
 
         Collections.sort(dateKeys, new dateKeyComparator());
 
-        ArrayList<Item> items = new ArrayList<Item>();
+        agendaItems = new ArrayList<Item>();
 
         // this day
 
@@ -247,11 +286,11 @@ public class Agenda extends FragmentActivity {
                 Calendar date = Calendar.getInstance();
                 date.setTime(formatter.parse(dateKeys.get(i)));
                 DayHeaderItem dayHeaderItem = new DayHeaderItem(date);
-                items.add(dayHeaderItem);
+                agendaItems.add(dayHeaderItem);
 
                 if (!hist) {
                     EventItem eventItem = new EventItem(null, "This Day in History", null, null, EventItem.ITEM_TYPE_HISTORY, false);
-                    items.add(eventItem);
+                    agendaItems.add(eventItem);
 
                     hist = true;
                 }
@@ -270,21 +309,26 @@ public class Agenda extends FragmentActivity {
                     Calendar eventc = Calendar.getInstance();
                     eventc.set(event.getStartDate().getYear(), (event.getStartDate().getMonth() - 1), (event.getStartDate().getDay()), event.getStartDate().getHours(), event.getStartDate().getMinutes(), event.getStartDate().getSeconds());
                     EventItem eventItem = new EventItem(event, event.eventName, eventc, null, EventItem.ITEM_TYPE_EVENT, (event.getReminder() != 0));
-                    items.add(eventItem);
+                    agendaItems.add(eventItem);
                 }
+            } else {
+                EventItem eventItem = new EventItem(null, null, null, null, EventItem.ITEM_TYPE_NOEVENT, false);
+                agendaItems.add(eventItem);
             }
         }
 
         if (adapter == null) {
-            adapter = new AgendaArrayAdapter(this, items);
+            adapter = new AgendaArrayAdapter(this, agendaItems);
             agendaListView.setAdapter(adapter);
         } else {
             adapter.clear();
-            adapter.addAll(items);
+            adapter.addAll(agendaItems);
             adapter.notifyDataSetChanged();
             agendaListView.invalidateViews();
             agendaListView.refreshDrawableState();
         }
+
+        scrollToDate(scrollToDateWhenLoaded);
     }
 
     // Week View
@@ -313,6 +357,7 @@ public class Agenda extends FragmentActivity {
         weekViewAdapter.setAnchorDate(datec);
         weekViewAdapter.notifyDataSetChanged();
         weekViewPager.setCurrentItem(weekViewAdapter.getInitialPosition());
+        scrollToDate(datec);
     }
 
     private void setWeekViewToWeekOf_deprecated(Calendar datec) {

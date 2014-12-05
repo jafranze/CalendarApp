@@ -71,6 +71,10 @@ public class AgendaArrayAdapter extends ArrayAdapter<Item> {
                     timeView.setText("·");
                     reminderButton.setVisibility(View.VISIBLE);
                     reminderButton.setImageDrawable(getContext().getResources().getDrawable(R.drawable.ic_book_grey600_24dp));
+                } else if(eventItem.itemType() == EventItem.ITEM_TYPE_NOEVENT) {
+                    view.setAlpha(0.4f);
+                    timeView.setText("·");
+                    reminderButton.setVisibility(View.INVISIBLE);
                 }
             }
         }
