@@ -1,0 +1,11 @@
+Things we did not have time to implement:
+
+- Weather functionality (Most of the code is ready, but did not reach implementation)
+
+- Automatic current day voice memo playback
+
+- We wanted month view to match the look of agenda view
+
+- We wanted week and agenda scrolling to sync with each other automatically
+
+Besides these items, we were happy with what we were able to accomplish :)

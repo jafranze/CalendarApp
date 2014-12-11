@@ -28,6 +28,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
+import java.util.Iterator;
 
 
 public class AddEvent extends Activity {
@@ -39,6 +40,7 @@ public class AddEvent extends Activity {
     Date endDate;
 
     long remindertime;
+    long calendarID;
 
     TextView datetv;
     TextView daytv;
@@ -48,6 +50,7 @@ public class AddEvent extends Activity {
     TextView endtv;
     TextView titletv;
     TextView descriptiontv;
+    TextView categorytv;
     TextView locationtv;
 
     ImageButton reminderib;
@@ -58,6 +61,8 @@ public class AddEvent extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_addevent);
 
+        //myCalendar category = new myCalendar();
+
         datetv = (TextView)findViewById(R.id.add_event_day);
         daytv = (TextView)findViewById(R.id.add_event_dow);
         monthtv = (TextView)findViewById(R.id.add_event_month);
@@ -66,6 +71,7 @@ public class AddEvent extends Activity {
         endtv = (TextView)findViewById(R.id.add_event_end);
         titletv = (TextView)findViewById(R.id.add_event_title);
         descriptiontv = (TextView)findViewById(R.id.add_event_description);
+        //categorytv = (TextView)findViewById(R.id.add_event_category);
         locationtv = (TextView)findViewById(R.id.add_event_location);
 
         reminderib = (ImageButton)findViewById(R.id.add_event_reminder);
@@ -87,6 +93,7 @@ public class AddEvent extends Activity {
 
             long eventID = (long)extras.getLong("event_id");
             event = myDB.retrieveEvent(myDB.findIndexOfEventWithID(eventID));
+            //category = myDB.retrieveCalendarList().get(myDB.findIndexOfCalendarWithID(event.getCalID()));
         }
 
         if (event != null) {
@@ -99,6 +106,7 @@ public class AddEvent extends Activity {
             titletv.setText(event.getName());
             descriptiontv.setText(event.getDescription());
             locationtv.setText(event.getLocation());
+            //categorytv.setText(category.getName());
 
             reminderib.setAlpha(event.reminder != 0 ? 1.0f : 0.3f);
 
@@ -109,6 +117,7 @@ public class AddEvent extends Activity {
             event = new Event();
             newEvent = true;
             event.changeName("Event Name");
+            calendarID = 1;
 
             Calendar today = Calendar.getInstance();
 
@@ -298,7 +307,41 @@ public class AddEvent extends Activity {
             }
         }).show();
     }
+/*
+    public void didClickEventCategory(View v) {
+        CalDBCommun myDB = new CalDBCommun(this);
+        String[] cats;
+        List<myCalendar> categoryList = myDB.retrieveCalendarList();
+        Iterator<myCalendar> myIterator = categoryList.iterator();
 
+        cats = new String[categoryList.size()];
+        int index = 0;
+
+        //traverse list of calendars to add display name to cats
+        while(myIterator.hasNext())
+        {
+            cats[index] = myIterator.next().getName();
+            index++;
+        }
+
+        final EditText input = new EditText(this);
+        input.setText(categoryList.get(myDB.findIndexOfCalendarWithID((int)event.getCalID())).getName());
+        input.selectAll();
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Choose Category")
+                .setItems(cats, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // The 'which' argument contains the index position
+                        // of the selected item
+
+                        calendarID = which;
+                    }
+                });
+        calendarID = categoryList.get((int)calendarID).getID();
+        categorytv.setText(myDB.retrieveCalendarList().get(myDB.findIndexOfCalendarWithID(calendarID)).getName());
+        builder.create().show();
+    }
+*/
     public void didClickEventLocation(View v) {
         final EditText input = new EditText(this);
         input.setText(event.getLocation());
@@ -419,6 +462,7 @@ public class AddEvent extends Activity {
         event.changeName(titletv.getText().toString());
         event.setCalID(calList.get(0).getID());
         event.setTimezone(timez);
+        event.setCalID(calendarID);
 
         if (newEvent) {
             myDB.addEvent(event);

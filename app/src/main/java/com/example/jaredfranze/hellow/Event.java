@@ -20,7 +20,7 @@ public class Event
     public Event()
     {
         id = 0;
-        calendar_id = 0;
+        calendar_id = 1;
         eventName = null;
         eventDescription = null;
         location = null;
@@ -344,6 +344,7 @@ public class Event
 
     public long getReminder() { return reminder; }
     public void setReminder(long rem) { reminder = rem; }
+
 
     public void setReminderID(long id){ reminder_id = id; }
     public long getReminderID(){ return reminder_id; }

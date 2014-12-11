@@ -85,6 +85,22 @@ public class CalDBCommun
         return -1;
     }
 
+    public int findIndexOfCalendarWithID(long id){
+        myCalendar indexedCalendar;
+        if((id < calendarList.size())&&(id >= 0)){
+            if(calendarList.get((int) id).getID() == id) {
+                return (int) id;
+            }
+        }
+        ListIterator<myCalendar> myIterator = calendarList.listIterator();
+        while(myIterator.hasNext()){
+            if(myIterator.next().getID() == id){
+                return calendarList.indexOf(myIterator.previous());
+            }
+        }
+        return -1;
+    }
+
     public int deleteAllEvents() {
         Event myEvent;
         int totalRows = 0;

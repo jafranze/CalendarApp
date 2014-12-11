@@ -56,7 +56,7 @@ public class ThisDayInHistory {
         String[] split = text.split("link:");
         String[] split2 = split[1].split("description:");
 
-        String[] split3 = split2[1].split("\\.");
+        String[] split3 = split2[1].split("\\/");
         String temp = split3[1];
         builder.append(split3[0]);
         /*
@@ -76,7 +76,8 @@ public class ThisDayInHistory {
 
         String finalString = builder.toString();
         //description = split3[0].substring(7);
-        description = finalString.substring(7);
+        description = finalString.substring(7, (finalString.length() - 2));
+
         //System.out.println(split3[0].substring(0, 7));
     }
 
