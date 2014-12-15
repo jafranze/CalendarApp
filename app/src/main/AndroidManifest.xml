@@ -25,8 +25,7 @@
         <activity
             android:name="com.example.jaredfranze.hellow.Agenda"
             android:label="@string/title_activity_agenda"
-            android:theme="@android:style/Theme.Holo.NoActionBar"
-            android:screenOrientation="portrait">
+            android:theme="@android:style/Theme.Holo.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
